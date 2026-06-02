@@ -42,15 +42,21 @@ class SalesJunior(Sales):
 
     def hitungPendapatan(self):
         komisi = self._hitung_komisi_dasar()
+
         bonus_target = self._hitung_bonus_target()
+
         pendapatan_kotor = self.gaji_pokok + komisi + bonus_target
+
         pajak = pendapatan_kotor * 0.05
+
         return pendapatan_kotor - pajak
 
     def get_rincian(self):
         komisi = self._hitung_komisi_dasar()
         bonus_target = self._hitung_bonus_target()
+
         pendapatan_kotor = self.gaji_pokok + komisi + bonus_target
+
         pajak = pendapatan_kotor * 0.05
         pendapatan_bersih = pendapatan_kotor - pajak
         
@@ -72,18 +78,24 @@ class SalesSenior(Sales):
         komisi_dasar = self._hitung_komisi_dasar()
         tambahan_komisi = self.total_penjualan * 0.02
         total_komisi = komisi_dasar + tambahan_komisi
+
         bonus_target = self._hitung_bonus_target()
+
         pendapatan_kotor = self.gaji_pokok + total_komisi + bonus_target
         pajak = pendapatan_kotor * 0.05
+
         return pendapatan_kotor - pajak
 
     def get_rincian(self):
         komisi_dasar = self._hitung_komisi_dasar()
         tambahan_komisi = self.total_penjualan * 0.02
         total_komisi = komisi_dasar + tambahan_komisi
+
         bonus_target = self._hitung_bonus_target()
+
         pendapatan_kotor = self.gaji_pokok + total_komisi + bonus_target
         pajak = pendapatan_kotor * 0.05
+
         pendapatan_bersih = pendapatan_kotor - pajak
         
         return (
@@ -104,10 +116,14 @@ class SalesManager(Sales):
         komisi_dasar = self._hitung_komisi_dasar()
         tambahan_komisi = self.total_penjualan * 0.03
         total_komisi = komisi_dasar + tambahan_komisi
+
         bonus_tambahan = total_komisi * 0.01
         bonus_target = self._hitung_bonus_target()
+
         pendapatan_kotor = self.gaji_pokok + total_komisi + bonus_tambahan + bonus_target
+
         pajak = pendapatan_kotor * 0.05
+        
         return pendapatan_kotor - pajak
 
     def get_rincian(self):

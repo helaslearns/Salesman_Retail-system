@@ -2,19 +2,19 @@ from Sales.Sales import SalesJunior, SalesSenior, SalesManager
 
 def main():
     salesman1 = SalesJunior(
-        nama="Helas", 
+        nama="Danis", 
         total_penjualan=5000000, 
         target_penjualan=5000000
     )
     
     salesman2 = SalesSenior(
-        nama="Danis", 
+        nama="Maul", 
         total_penjualan=15000000, 
         target_penjualan=10000000
     )
     
     salesman3 = SalesManager(
-        nama="Maul", 
+        nama="Helas", 
         total_penjualan=8000000, 
         target_penjualan=10000000
     )
