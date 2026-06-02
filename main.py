@@ -1,4 +1,4 @@
-from Sales.Sales import Sales, SalesJunior, SalesSenior, SalesManager
+from Sales.Sales import SalesJunior, SalesSenior, SalesManager
 
 def main():
     salesman1 = SalesJunior(

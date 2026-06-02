@@ -95,4 +95,3 @@ class SalesManager(Sales):
             f'Gaji Pokok: {formatRupiah(self.gaji_pokok)}\n'
             f'Bonus Gaji: {self.bonus_gaji*100}%\n'
         )   
-    
