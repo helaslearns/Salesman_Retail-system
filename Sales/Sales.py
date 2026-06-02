@@ -1,22 +1,5 @@
-from __future__ import annotations
-
 def formatRupiah(nominal: int | float):
     return f'Rp {nominal:,.0f}'.replace(',', '.') + ',00'
-
-def hitungEkstra(sales: Sales | SalesJunior | SalesManager | SalesManager):
-    pajak = 0.05
-    if isinstance(sales, Sales | SalesJunior | SalesManager | SalesManager):
-        if sales.total_penjualan == sales.target_penjualan:
-            komisi = 0.05
-            bonus = 0
-        elif sales.total_penjualan >= sales.target_penjualan:
-            bonus = 2000000
-            komisi = 1
-        else:
-            komisi = 1
-            bonus = 0
-    
-    return (bonus, komisi, pajak)
 
 class Sales:
     _counter = 1
@@ -28,6 +11,20 @@ class Sales:
         self.total_penjualan = kwargs.get('total_penjualan', 0)
         self.target_penjualan = kwargs.get('target_penjualan', 0)
 
+    def _remuneration(self):
+        pajak = 0.05
+        if self.total_penjualan == self.target_penjualan:
+            komisi = 0.05
+            bonus = 0
+        elif self.total_penjualan > self.target_penjualan:
+            komisi = 1 
+            bonus = 2000000
+        else:
+            komisi = 1
+            bonus = 0
+        
+        return komisi, bonus, pajak
+    
     def hitungPendapatan(self):
         return 0.0
 
@@ -43,10 +40,12 @@ class SalesJunior(Sales):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.gaji_pokok = kwargs.get('gaji_pokok', 0)
+        self.bonus_gaji = 0
 
     def hitungPendapatan(self):
-        tambahan = hitungEkstra(self)
-        gaji_final = ((self.gaji_pokok*tambahan[1]) + tambahan[0]) * (1 - tambahan[2])
+        komisi, bonus, pajak = super()._remuneration()
+        sub_total = (self.gaji_pokok + (1 + komisi) + bonus) * (1 - pajak)
+        gaji_final = sub_total + self.bonus_gaji
 
         return f'{formatRupiah(gaji_final)}'
 
@@ -64,9 +63,9 @@ class SalesSenior(Sales):
         self.bonus_gaji = kwargs.get('bonus_gaji', 0)
 
     def hitungPendapatan(self):
-        tambahan = hitungEkstra(self)
-        sub_total = ((self.gaji_pokok*tambahan[1]) + tambahan[0]) * (1 - tambahan[2])
-        gaji_final = sub_total * (1 + self.bonus_gaji)
+        komisi, bonus, pajak = super()._remuneration()
+        sub_total = (self.gaji_pokok + (1 + komisi) + bonus) * (1 - pajak)
+        gaji_final = sub_total + self.bonus_gaji
 
         return f'{formatRupiah(gaji_final)}'
 
@@ -84,10 +83,10 @@ class SalesManager(Sales):
         self.bonus_gaji = kwargs.get('bonus_gaji', 0)
 
     def hitungPendapatan(self):
-        tambahan = hitungEkstra(self)
-        sub_total = ((self.gaji_pokok*tambahan[1]) + tambahan[0]) * (1 - tambahan[2])
-        gaji_final = sub_total * (1 + self.bonus_gaji)
-        
+        komisi, bonus, pajak = super()._remuneration()
+        sub_total = (self.gaji_pokok + (1 + komisi) + bonus) * (1 - pajak)
+        gaji_final = sub_total + self.bonus_gaji
+
         return f'{formatRupiah(gaji_final)}'
 
     def __str__(self):
